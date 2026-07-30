@@ -840,7 +840,7 @@ class DeviceAiPlugin: Plugin {
         }
 
         if let bytes = source.bytes {
-            guard let uiImage = UIImage(data: bytes) else {
+            guard let uiImage = UIImage(data: Data(bytes)) else {
                 return nil
             }
             return uiImage.cgImage
@@ -992,7 +992,7 @@ class DeviceAiPlugin: Plugin {
                     let session: LanguageModelSession
                     if let systemPrompt = args.options.systemPrompt {
                         let instructions = Transcript.Instructions(segments: [.text(Transcript.TextSegment(content: systemPrompt))], toolDefinitions: [])
-                        session = LanguageModelSession(model: model, instructions: instructions)
+                        session = LanguageModelSession(model: model, instructions: { instructions })
                     } else {
                         session = LanguageModelSession(model: model)
                     }
@@ -1039,7 +1039,7 @@ class DeviceAiPlugin: Plugin {
             let session: LanguageModelSession
             if let systemPrompt = args.options?.systemPrompt {
                 let instructions = Transcript.Instructions(segments: [.text(Transcript.TextSegment(content: systemPrompt))], toolDefinitions: [])
-                session = LanguageModelSession(model: model, instructions: instructions)
+                session = LanguageModelSession(model: model, instructions: { instructions })
             } else {
                 session = LanguageModelSession(model: model)
             }
