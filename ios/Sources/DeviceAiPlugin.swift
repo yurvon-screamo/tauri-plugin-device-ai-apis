@@ -273,6 +273,23 @@ struct PluginError: Encodable {
     let message: String
 }
 
+// Tauri's `Invoke.reject` takes a String; the plugin builds structured
+// PluginError values throughout. This overload JSON-encodes the structured
+// error so the JS side can parse `code`/`message`, falling back to the plain
+// message if encoding fails. Defined once here instead of changing every
+// reject call site.
+extension Tauri.Invoke {
+    func reject(_ error: PluginError) {
+        if let data = try? JSONEncoder().encode(error),
+           let json = String(data: data, encoding: .utf8)
+        {
+            reject(json)
+        } else {
+            reject(error.message)
+        }
+    }
+}
+
 func featureNotAvailable(_ feature: String) -> PluginError {
     return PluginError(code: "FEATURE_NOT_AVAILABLE", message: "Feature not available: \(feature)")
 }
@@ -626,14 +643,14 @@ class DeviceAiPlugin: Plugin {
         if let recognitionLevel = args.options?.recognitionLevel {
             switch recognitionLevel {
             case "fast":
-                request.recognitionLevel = .fast
+                request.recognitionLevel = VNRequestTextRecognitionLevel.fast
             case "accurate":
-                request.recognitionLevel = .accurate
+                request.recognitionLevel = VNRequestTextRecognitionLevel.accurate
             default:
-                request.recognitionLevel = .accurate
+                request.recognitionLevel = VNRequestTextRecognitionLevel.accurate
             }
         } else {
-            request.recognitionLevel = .accurate
+            request.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         }
 
         // Configure languages
