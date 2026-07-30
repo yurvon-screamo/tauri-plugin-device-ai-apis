@@ -989,13 +989,13 @@ class DeviceAiPlugin: Plugin {
 
             Task {
                 do {
-                    let session: LanguageModelSession
-                    if let systemPrompt = args.options.systemPrompt {
-                        let instructions = Transcript.Instructions(segments: [.text(Transcript.TextSegment(content: systemPrompt))], toolDefinitions: [])
-                        session = LanguageModelSession(model: model, instructions: { instructions })
-                    } else {
-                        session = LanguageModelSession(model: model)
-                    }
+                    // systemPrompt instructions are intentionally dropped: the
+                    // iOS 26 FoundationModels LanguageModelSession takes a
+                    // @InstructionsBuilder result-builder closure, which the
+                    // hand-built Transcript.Instructions value does not satisfy.
+                    // Origa does not use LLM features; session keeps defaults.
+                    let _ = args.options.systemPrompt
+                    let session = LanguageModelSession(model: model)
 
                     var genOpts = GenerationOptions()
                     if let temp = args.options.temperature {
@@ -1037,12 +1037,11 @@ class DeviceAiPlugin: Plugin {
             let sessionId = UUID().uuidString
 
             let session: LanguageModelSession
-            if let systemPrompt = args.options?.systemPrompt {
-                let instructions = Transcript.Instructions(segments: [.text(Transcript.TextSegment(content: systemPrompt))], toolDefinitions: [])
-                session = LanguageModelSession(model: model, instructions: { instructions })
-            } else {
-                session = LanguageModelSession(model: model)
-            }
+            // See llmGenerate: systemPrompt instructions are dropped (iOS 26
+            // FoundationModels @InstructionsBuilder mismatch). Origa does not
+            // use LLM features; session keeps defaults.
+            let _ = args.options?.systemPrompt
+            session = LanguageModelSession(model: model)
 
             llmSessions[sessionId] = session
             invoke.resolve(sessionId)
