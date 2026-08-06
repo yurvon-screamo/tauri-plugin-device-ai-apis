@@ -39,7 +39,9 @@ dependencies {
     implementation("com.google.android.material:material:1.7.0")
 
     // ML Kit dependencies for Vision APIs
-    implementation("com.google.mlkit:text-recognition:16.0.0")
+    // Japanese script recognizer — Origa is a Japanese-learning app; Latin
+    // recognizer returned empty results for all kanji/kana text.
+    implementation("com.google.mlkit:text-recognition-japanese:16.0.1")
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
     implementation("com.google.mlkit:face-detection:16.1.6")
     implementation("com.google.mlkit:image-labeling:17.0.8")
