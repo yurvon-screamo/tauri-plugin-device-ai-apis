@@ -30,7 +30,7 @@ import com.google.mlkit.vision.face.FaceLandmark
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import org.json.JSONArray
 import org.json.JSONObject
@@ -406,7 +406,7 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
         val imageWidth = inputImage.width.toFloat().coerceAtLeast(1f)
         val imageHeight = inputImage.height.toFloat().coerceAtLeast(1f)
 
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+        val recognizer = TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build())
 
         recognizer.process(inputImage)
             .addOnSuccessListener { visionText ->
