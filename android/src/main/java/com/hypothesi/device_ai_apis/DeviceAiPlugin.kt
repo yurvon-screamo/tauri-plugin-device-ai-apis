@@ -389,7 +389,7 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
             voiceArray.put(voiceObj)
         }
 
-        invoke.resolve(voiceArray)
+        invoke.resolveObject(voiceArray)
     }
 
     // MARK: - Vision
@@ -474,7 +474,7 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
                     barcodeArray.put(barcodeObj)
                 }
 
-                invoke.resolve(barcodeArray)
+                invoke.resolveObject(barcodeArray)
             }
             .addOnFailureListener { e ->
                 invoke.reject("BARCODE_DETECTION_FAILED", e.message ?: "Unknown error")
@@ -560,7 +560,7 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
                     faceArray.put(faceObj)
                 }
 
-                invoke.resolve(faceArray)
+                invoke.resolveObject(faceArray)
             }
             .addOnFailureListener { e ->
                 invoke.reject("FACE_DETECTION_FAILED", e.message ?: "Unknown error")
@@ -597,7 +597,7 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
                     classificationArray.put(classificationObj)
                 }
 
-                invoke.resolve(classificationArray)
+                invoke.resolveObject(classificationArray)
             }
             .addOnFailureListener { e ->
                 invoke.reject("IMAGE_CLASSIFICATION_FAILED", e.message ?: "Unknown error")

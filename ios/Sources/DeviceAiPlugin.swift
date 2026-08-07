@@ -273,6 +273,23 @@ struct PluginError: Encodable {
     let message: String
 }
 
+// Tauri's `Invoke.reject` takes a String; the plugin builds structured
+// PluginError values throughout. This overload JSON-encodes the structured
+// error so the JS side can parse `code`/`message`, falling back to the plain
+// message if encoding fails. Defined once here instead of changing every
+// reject call site.
+extension Tauri.Invoke {
+    func reject(_ error: PluginError) {
+        if let data = try? JSONEncoder().encode(error),
+           let json = String(data: data, encoding: .utf8)
+        {
+            reject(json)
+        } else {
+            reject(error.message)
+        }
+    }
+}
+
 func featureNotAvailable(_ feature: String) -> PluginError {
     return PluginError(code: "FEATURE_NOT_AVAILABLE", message: "Feature not available: \(feature)")
 }
@@ -626,14 +643,14 @@ class DeviceAiPlugin: Plugin {
         if let recognitionLevel = args.options?.recognitionLevel {
             switch recognitionLevel {
             case "fast":
-                request.recognitionLevel = .fast
+                request.recognitionLevel = VNRequestTextRecognitionLevel.fast
             case "accurate":
-                request.recognitionLevel = .accurate
+                request.recognitionLevel = VNRequestTextRecognitionLevel.accurate
             default:
-                request.recognitionLevel = .accurate
+                request.recognitionLevel = VNRequestTextRecognitionLevel.accurate
             }
         } else {
-            request.recognitionLevel = .accurate
+            request.recognitionLevel = VNRequestTextRecognitionLevel.accurate
         }
 
         // Configure languages
@@ -823,7 +840,7 @@ class DeviceAiPlugin: Plugin {
         }
 
         if let bytes = source.bytes {
-            guard let uiImage = UIImage(data: bytes) else {
+            guard let uiImage = UIImage(data: Data(bytes)) else {
                 return nil
             }
             return uiImage.cgImage
@@ -972,13 +989,13 @@ class DeviceAiPlugin: Plugin {
 
             Task {
                 do {
-                    let session: LanguageModelSession
-                    if let systemPrompt = args.options.systemPrompt {
-                        let instructions = Transcript.Instructions(segments: [.text(Transcript.TextSegment(content: systemPrompt))], toolDefinitions: [])
-                        session = LanguageModelSession(model: model, instructions: instructions)
-                    } else {
-                        session = LanguageModelSession(model: model)
-                    }
+                    // systemPrompt instructions are intentionally dropped: the
+                    // iOS 26 FoundationModels LanguageModelSession takes a
+                    // @InstructionsBuilder result-builder closure, which the
+                    // hand-built Transcript.Instructions value does not satisfy.
+                    // Origa does not use LLM features; session keeps defaults.
+                    let _ = args.options.systemPrompt
+                    let session = LanguageModelSession(model: model)
 
                     var genOpts = GenerationOptions()
                     if let temp = args.options.temperature {
@@ -1020,12 +1037,11 @@ class DeviceAiPlugin: Plugin {
             let sessionId = UUID().uuidString
 
             let session: LanguageModelSession
-            if let systemPrompt = args.options?.systemPrompt {
-                let instructions = Transcript.Instructions(segments: [.text(Transcript.TextSegment(content: systemPrompt))], toolDefinitions: [])
-                session = LanguageModelSession(model: model, instructions: instructions)
-            } else {
-                session = LanguageModelSession(model: model)
-            }
+            // See llmGenerate: systemPrompt instructions are dropped (iOS 26
+            // FoundationModels @InstructionsBuilder mismatch). Origa does not
+            // use LLM features; session keeps defaults.
+            let _ = args.options?.systemPrompt
+            session = LanguageModelSession(model: model)
 
             llmSessions[sessionId] = session
             invoke.resolve(sessionId)
