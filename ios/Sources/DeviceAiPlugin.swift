@@ -545,6 +545,11 @@ class DeviceAiPlugin: Plugin {
             utterance.volume = volume
         }
 
+        // Flush any in-flight utterance so rapid consecutive calls don't
+        // accumulate a playback queue. The Android path uses
+        // TextToSpeech.QUEUE_FLUSH for the same effect; without this the
+        // AVSpeechSynthesizer default is to enqueue.
+        speechSynthesizer.stopSpeaking(at: .immediate)
         speechSynthesizer.speak(utterance)
         invoke.resolve([:])
     }
