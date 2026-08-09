@@ -419,10 +419,11 @@ pub enum RecognitionLevel {
 /// Each variant corresponds to a separate ML Kit dependency. The host app must
 /// opt in by declaring the dependency in its `build.gradle.kts` — see the README
 /// for the exact artifact IDs. Latin is always available.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum OcrScript {
     /// Latin script (default, always available).
+    #[default]
     Latin,
     /// Japanese script (kanji, hiragana, katakana).
     Japanese,
@@ -432,12 +433,6 @@ pub enum OcrScript {
     Korean,
     /// Devanagari script.
     Devanagari,
-}
-
-impl Default for OcrScript {
-    fn default() -> Self {
-        Self::Latin
-    }
 }
 
 /// Result of text recognition (OCR).
