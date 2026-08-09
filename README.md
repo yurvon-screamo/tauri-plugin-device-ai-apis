@@ -43,7 +43,7 @@ Add the plugin to your Tauri project's `Cargo.toml`:
 
 ```toml
 [dependencies]
-tauri-plugin-device-ai-apis = { git = "https://github.com/hypothesi/tauri-plugin-device-ai-apis" }
+tauri-plugin-device-ai-apis = { git = "https://github.com/yurvon-screamo/tauri-plugin-device-ai-apis" }
 ```
 
 Register the plugin in your `lib.rs`:
@@ -65,7 +65,7 @@ through the plugin-hosted mobile bridge:
 
 ```toml
 [dependencies]
-device-ai = { git = "https://github.com/hypothesi/tauri-plugin-device-ai-apis" }
+device-ai = { git = "https://github.com/yurvon-screamo/tauri-plugin-device-ai-apis" }
 ```
 
 ```rust
@@ -92,7 +92,7 @@ fn main() -> device_ai::Result<()> {
 Install the API package:
 
 ```bash
-npm install @hypothesi/tauri-plugin-device-ai-apis
+npm install @yurvon-screamo/tauri-plugin-device-ai-apis
 ```
 
 ## Usage
@@ -100,7 +100,7 @@ npm install @hypothesi/tauri-plugin-device-ai-apis
 ### Language model (LLM)
 
 ```typescript
-import { llm } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { llm } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 // Check availability
 const status = await llm.checkAvailability();
@@ -155,7 +155,7 @@ console.log(rewritten.rewrittenText);
 Check which features are available on the current device:
 
 ```typescript
-import { getCapabilities } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { getCapabilities } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 const capabilities = await getCapabilities();
 if (capabilities.speechRecognition.available) {
@@ -168,7 +168,7 @@ if (capabilities.speechRecognition.available) {
 Convert speech to text:
 
 ```typescript
-import { speech } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { speech } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 // One-shot recognition
 const result = await speech.recognize({ language: "en-US" });
@@ -181,7 +181,7 @@ console.log("Confidence:", result.confidence);
 Synthesize speech from text:
 
 ```typescript
-import { speech } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { speech } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 // Speak text
 await speech.synthesize("Hello, world!", {
@@ -203,7 +203,7 @@ await speech.synthesize("Hello!", { voice: voices[0].id });
 Extract text from images:
 
 ```typescript
-import { vision } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { vision } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 // From base64 image data
 const result = await vision.recognizeText({ base64: imageData });
@@ -220,7 +220,7 @@ for (const block of result.blocks) {
 Detect and decode barcodes and QR codes:
 
 ```typescript
-import { vision } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { vision } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 const barcodes = await vision.detectBarcodes({ base64: imageData });
 for (const barcode of barcodes) {
@@ -233,7 +233,7 @@ for (const barcode of barcodes) {
 Detect faces with optional landmarks:
 
 ```typescript
-import { vision } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { vision } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 const faces = await vision.detectFaces(
   { base64: imageData },
@@ -256,7 +256,7 @@ for (const face of faces) {
 Classify images with labels:
 
 ```typescript
-import { vision } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { vision } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 const classifications = await vision.classifyImage(
   { base64: imageData },
@@ -273,7 +273,7 @@ for (const classification of classifications) {
 Identify the language of text:
 
 ```typescript
-import { text } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { text } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 const result = await text.identifyLanguage("Bonjour, comment allez-vous?");
 console.log("Language:", result.language); // 'fr'
@@ -438,7 +438,7 @@ LLM flows end-to-end through the plugin surface.
 All API calls can throw errors with structured error codes:
 
 ```typescript
-import { DeviceAiError } from "@hypothesi/tauri-plugin-device-ai-apis";
+import { DeviceAiError } from "@yurvon-screamo/tauri-plugin-device-ai-apis";
 
 try {
   await speech.recognize();

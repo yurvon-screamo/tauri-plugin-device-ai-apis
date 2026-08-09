@@ -177,5 +177,5 @@ cargo test --all-targets --all-features
 
 ## Usage
 
-- [Tauri plugin: Device AI APIs](https://github.com/hypothesi/tauri-plugin-device-ai-apis)
+- [Tauri plugin: Device AI APIs](https://github.com/yurvon-screamo/tauri-plugin-device-ai-apis)
   exposes these capabilities to a Tauri application.

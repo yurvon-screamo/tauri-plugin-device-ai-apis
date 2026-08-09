@@ -50,7 +50,7 @@
     hasWebSpeechRecognition,
     hasWebSpeechSynthesis,
     hasBarcodeDetection
-  } from '@hypothesi/tauri-plugin-device-ai-apis'
+  } from '@yurvon-screamo/tauri-plugin-device-ai-apis'
 
   // ============================================================================
   // State

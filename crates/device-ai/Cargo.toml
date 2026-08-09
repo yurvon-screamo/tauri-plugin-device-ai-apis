@@ -1,12 +1,12 @@
 [package]
 name = "device-ai"
-version = "0.1.1"
-authors = ["Hypothesi"]
+version = "0.2.0"
+authors = ["yurvon-screamo"]
 description = "Rust library for native, on-device AI APIs"
 edition = "2021"
 rust-version = "1.77.2"
 license = "MIT"
-repository = "https://github.com/hypothesi/tauri-plugin-device-ai-apis"
+repository = "https://github.com/yurvon-screamo/tauri-plugin-device-ai-apis"
 keywords = ["ai", "speech", "vision", "llm", "ocr"]
 categories = ["api-bindings", "multimedia"]
 readme = "README.md"

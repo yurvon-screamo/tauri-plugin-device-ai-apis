@@ -8,7 +8,7 @@ both Rust crates plus the npm package, and then creates a GitHub release.
 
 1. You have push access to the repository.
 2. You have a configured GPG key for Git tag signing, and GitHub can verify that key.
-3. npm Trusted Publishing is configured for `@hypothesi/tauri-plugin-device-ai-apis`.
+3. npm Trusted Publishing is configured for `@yurvon-screamo/tauri-plugin-device-ai-apis`.
 4. The repository has a `CARGO_REGISTRY_TOKEN` secret for crates.io publishing.
 
 For one-time setup, follow `.github/TRUSTED_PUBLISHING_SETUP.md`.

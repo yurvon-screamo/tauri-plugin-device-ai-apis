@@ -22,7 +22,7 @@ import {
  *
  * @example
  * ```typescript
- * import { getCapabilities } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { getCapabilities } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const caps = await getCapabilities();
  * if (caps.speechRecognition.available) {

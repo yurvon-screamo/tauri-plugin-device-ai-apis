@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.hypothesi.device_ai_apis"
+    namespace = "com.yurvonscreamo.device_ai_apis"
     compileSdk = 36
 
     defaultConfig {

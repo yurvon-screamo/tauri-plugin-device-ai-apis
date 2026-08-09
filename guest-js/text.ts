@@ -14,7 +14,7 @@ import type { LanguageIdentification, Translation } from "./types";
  *
  * @example
  * ```typescript
- * import { text } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { text } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const result = await text.identifyLanguage('Bonjour, comment allez-vous?');
  * console.log(`Language: ${result.language} (${result.confidence})`);
@@ -34,7 +34,7 @@ export async function identifyLanguage(text: string): Promise<LanguageIdentifica
  *
  * @example
  * ```typescript
- * import { text } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { text } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const result = await text.translate('Hello, world!', 'en', 'fr');
  * console.log(`Translation: ${result.translatedText}`);

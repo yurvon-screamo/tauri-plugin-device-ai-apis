@@ -18,7 +18,7 @@ pub fn init<R: Runtime, C: DeserializeOwned>(
     // convertible into device_ai::Error — apply the shared mapper.
     #[cfg(target_os = "android")]
     let handle = api
-        .register_android_plugin("com.hypothesi.device_ai_apis", "DeviceAiPlugin")
+        .register_android_plugin("com.yurvonscreamo.device_ai_apis", "DeviceAiPlugin")
         .map_err(mobile_invoke_error)?;
     #[cfg(target_os = "ios")]
     let handle = api

@@ -1,4 +1,4 @@
-package com.hypothesi.device_ai_apis
+package com.yurvonscreamo.device_ai_apis
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

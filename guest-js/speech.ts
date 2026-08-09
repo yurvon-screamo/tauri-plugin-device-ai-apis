@@ -28,7 +28,7 @@ import {
  *
  * @example
  * ```typescript
- * import { speech } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { speech } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const result = await speech.recognize({ language: 'en-US' });
  * console.log('You said:', result.text);
@@ -99,7 +99,7 @@ export async function stopRecognition(sessionId: string): Promise<RecognitionRes
  *
  * @example
  * ```typescript
- * import { speech } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { speech } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * await speech.synthesize('Hello, world!', { rate: 1.0 });
  * ```
@@ -127,7 +127,7 @@ export async function synthesize(text: string, options?: SynthesisOptions): Prom
  *
  * @example
  * ```typescript
- * import { speech } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { speech } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const voices = await speech.getVoices();
  * const englishVoices = voices.filter(v => v.language.startsWith('en'));

@@ -4,10 +4,10 @@ Complete these steps once before the first signed-tag release.
 
 ## npm Trusted Publishing
 
-1. Open the npm package access page for `@hypothesi/tauri-plugin-device-ai-apis`.
+1. Open the npm package access page for `@yurvon-screamo/tauri-plugin-device-ai-apis`.
 2. Add a Trusted Publisher with these values:
    * Provider: `GitHub Actions`
-   * Owner or organization: `hypothesi`
+   * Owner or organization: `yurvon-screamo`
    * Repository: `tauri-plugin-device-ai-apis`
    * Workflow file: `release.yml`
    * Environment: leave blank

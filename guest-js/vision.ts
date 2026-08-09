@@ -27,7 +27,7 @@ import { webDetectBarcodes } from "./web-barcode";
  *
  * @example
  * ```typescript
- * import { vision } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { vision } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * // From base64
  * const result = await vision.recognizeText({ base64: imageData });
@@ -62,7 +62,7 @@ export async function recognizeText(
  *
  * @example
  * ```typescript
- * import { vision } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { vision } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const barcodes = await vision.detectBarcodes({ base64: imageData });
  * for (const barcode of barcodes) {
@@ -95,7 +95,7 @@ export async function detectBarcodes(
  *
  * @example
  * ```typescript
- * import { vision } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { vision } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const faces = await vision.detectFaces(
  *   { base64: imageData },
@@ -123,7 +123,7 @@ export async function detectFaces(image: ImageSource, options?: FaceOptions): Pr
  *
  * @example
  * ```typescript
- * import { vision } from '@hypothesi/tauri-plugin-device-ai-apis';
+ * import { vision } from '@yurvon-screamo/tauri-plugin-device-ai-apis';
  *
  * const labels = await vision.classifyImage(
  *   { base64: imageData },

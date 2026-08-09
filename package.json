@@ -1,8 +1,8 @@
 {
-  "name": "@hypothesi/tauri-plugin-device-ai-apis",
-  "version": "0.1.1",
+  "name": "@yurvon-screamo/tauri-plugin-device-ai-apis",
+  "version": "0.2.0",
   "description": "Tauri plugin for on-device AI APIs: speech recognition, text-to-speech, OCR, barcode detection, face detection, image classification, and language identification.",
-  "author": "Hypothesi",
+  "author": "yurvon-screamo",
   "keywords": [
     "tauri",
     "tauri-plugin",

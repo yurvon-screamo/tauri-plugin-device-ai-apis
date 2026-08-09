@@ -1,4 +1,4 @@
-package com.hypothesi.device_ai_apis
+package com.yurvonscreamo.device_ai_apis
 
 import android.Manifest
 import android.app.Activity

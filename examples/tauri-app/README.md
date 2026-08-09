@@ -1,6 +1,6 @@
 # Example Tauri app
 
-This sample app exercises the local `@hypothesi/tauri-plugin-device-ai-apis` package and
+This sample app exercises the local `@yurvon-screamo/tauri-plugin-device-ai-apis` package and
 the local Rust plugin crate end to end.
 
 ## What it is for

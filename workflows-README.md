@@ -28,7 +28,7 @@ When a signed release tag is pushed, `release.yml` does this:
 4. Publishes `device-ai` to crates.io.
 5. Publishes `tauri-plugin-device-ai-apis` to crates.io, retrying while the `device-ai`
    release propagates through the crates.io index.
-6. Publishes `@hypothesi/tauri-plugin-device-ai-apis` to npm with provenance.
+6. Publishes `@yurvon-screamo/tauri-plugin-device-ai-apis` to npm with provenance.
 7. Creates a GitHub release for the tag with generated release notes.
 
 ## Required repository configuration
@@ -37,7 +37,7 @@ Before the first release, complete the one-time setup in `.github/TRUSTED_PUBLIS
 
 The workflow expects:
 
-1. npm Trusted Publishing for `@hypothesi/tauri-plugin-device-ai-apis`
+1. npm Trusted Publishing for `@yurvon-screamo/tauri-plugin-device-ai-apis`
 2. a repository secret named `CARGO_REGISTRY_TOKEN`
 3. maintainers who create release tags to have a GPG key configured locally and uploaded to
    GitHub so tag signatures verify

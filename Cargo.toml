@@ -1,14 +1,14 @@
 [package]
 name = "tauri-plugin-device-ai-apis"
-version = "0.1.1"
-authors = ["Hypothesi"]
+version = "0.2.0"
+authors = ["yurvon-screamo"]
 description = "A Tauri plugin for cross-platform device AI capabilities including speech, vision, and text processing"
 edition = "2021"
 rust-version = "1.77.2"
 exclude = ["/examples", "/dist-js", "/guest-js", "/node_modules"]
 links = "tauri-plugin-device-ai-apis"
 license = "MIT"
-repository = "https://github.com/hypothesi/tauri-plugin-device-ai-apis"
+repository = "https://github.com/yurvon-screamo/tauri-plugin-device-ai-apis"
 keywords = ["tauri", "plugin", "ai", "speech", "vision"]
 categories = ["api-bindings", "multimedia"]
 
@@ -17,7 +17,7 @@ members = ["crates/device-ai"]
 
 [dependencies]
 tauri = { version = "2.10.2" }
-device-ai = { version = "0.1.1", path = "crates/device-ai" }
+device-ai = { version = "0.2.0", path = "crates/device-ai" }
 serde = { version = "1.0", features = ["derive"] }
 
 [build-dependencies]
