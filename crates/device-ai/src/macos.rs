@@ -289,7 +289,7 @@ fn speech_recognize_from_file_data(
                 let ns_str: &NSString = &*(desc as *const NSString);
                 let error_msg = ns_str.to_string();
 
-                let mut data = lock.lock().unwrap();
+                let mut data = lock.lock().unwrap_or_else(|e| e.into_inner());
                 *data = Some(Err(crate::Error::SpeechRecognitionFailed {
                     message: format!("Recognition error: {error_msg}"),
                 }));
@@ -311,7 +311,7 @@ fn speech_recognize_from_file_data(
                             let text = ns_str.to_string();
                             let confidence = extract_transcription_confidence(best_transcription);
 
-                            let mut data = lock.lock().unwrap();
+                            let mut data = lock.lock().unwrap_or_else(|e| e.into_inner());
                             *data = Some(Ok(crate::models::RecognitionResult {
                                 text,
                                 confidence,
@@ -340,8 +340,10 @@ fn speech_recognize_from_file_data(
         // Wait for result with timeout (30 seconds for file processing)
         let (lock, cvar) = &*result_data;
         let result = {
-            let data = lock.lock().unwrap();
-            let mut wait_result = cvar.wait_timeout(data, Duration::from_secs(30)).unwrap();
+            let data = lock.lock().unwrap_or_else(|e| e.into_inner());
+            let mut wait_result = cvar
+                .wait_timeout(data, Duration::from_secs(30))
+                .unwrap_or_else(|e| e.into_inner());
 
             if wait_result.1.timed_out() {
                 let _ = std::fs::remove_file(&temp_path);
@@ -401,7 +403,7 @@ fn speech_recognize_from_microphone(
             let (lock, cvar) = &*result_data_clone;
 
             if !error.is_null() {
-                let mut data = lock.lock().unwrap();
+                let mut data = lock.lock().unwrap_or_else(|e| e.into_inner());
                 *data = Some(crate::models::RecognitionResult {
                     text: String::new(),
                     confidence: 0.0,
@@ -422,7 +424,7 @@ fn speech_recognize_from_microphone(
                 let is_final: bool = msg_send![result, isFinal];
                 let confidence = extract_transcription_confidence(best_transcription);
 
-                let mut data = lock.lock().unwrap();
+                let mut data = lock.lock().unwrap_or_else(|e| e.into_inner());
                 *data = Some(crate::models::RecognitionResult {
                     text,
                     confidence,
@@ -466,8 +468,10 @@ fn speech_recognize_from_microphone(
         // Wait for result with timeout (5 seconds)
         let (lock, cvar) = &*result_data;
         let result = {
-            let data = lock.lock().unwrap();
-            let mut wait_result = cvar.wait_timeout(data, Duration::from_secs(5)).unwrap();
+            let data = lock.lock().unwrap_or_else(|e| e.into_inner());
+            let mut wait_result = cvar
+                .wait_timeout(data, Duration::from_secs(5))
+                .unwrap_or_else(|e| e.into_inner());
 
             // Stop audio engine
             let _: () = msg_send![audio_engine, stop];
