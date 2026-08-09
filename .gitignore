@@ -15,6 +15,9 @@ node_modules/
 dist-js
 dist
 
+# Hermes agent
+.hermes/
+
 # AI
 
 specs
@@ -42,3 +45,10 @@ GEMINI.md
 .beads
 
 .fallow
+
+# Gradle
+android/.gradle/
+android/local.properties
+
+# Tauri generated schemas
+**/gen/schemas/
