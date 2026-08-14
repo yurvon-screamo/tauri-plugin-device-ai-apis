@@ -433,14 +433,20 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
      * Returns null if the class is not available (host app did not declare the
      * ML Kit dependency).
      */
-    @Suppress("UNCHECKED_CAST")
     private fun createScriptRecognizer(className: String): TextRecognizer? {
         return try {
             val clazz = Class.forName(className)
             val builder = clazz.getMethod("Builder").invoke(null) as Any
             val buildMethod = builder.javaClass.getMethod("build")
             val options = buildMethod.invoke(builder)
-            TextRecognition.getClient(options as com.google.mlkit.vision.text.TextRecognizerOptions)
+            // `TextRecognition.getClient` is resolved reflectively as well:
+            // its parameter type (`com.google.mlkit.vision.text.TextRecognizerOptions`)
+            // is not on this module's compile classpath — only the Latin
+            // options class is bundled with the base artifact, and the script
+            // artifacts are compileOnly in the host app.
+            val getClient = TextRecognition::class.java.methods
+                .first { it.name == "getClient" && it.parameterCount == 1 }
+            getClient.invoke(null, options) as TextRecognizer
         } catch (e: ClassNotFoundException) {
             null
         } catch (e: Exception) {
