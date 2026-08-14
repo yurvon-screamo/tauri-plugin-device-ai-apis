@@ -9,6 +9,7 @@ use crate::models::{
     OcrOptions, Point, RecognitionLevel, SynthesisOptions, TextBlock, TextLine,
     TextRecognitionResult, Voice, VoiceGender, VoiceQuality,
 };
+use crate::speech_live_ctrl::{self, LiveAction};
 use crate::{Error, Result};
 
 use objc2::rc::Retained;
@@ -276,13 +277,15 @@ unsafe fn request_speech_authorization() -> Result<()> {
     }
 
     // 3 = authorized; anything else after a prompt is a denial of some form.
-    if data.copied().unwrap_or(1) != 3 {
-        return Err(Error::PermissionDenied {
+    // `data` derefs to `Option<isize>` (None = spurious wakeup before the
+    // handler ran — treat as denied).
+    if *data == Some(3) {
+        Ok(())
+    } else {
+        Err(Error::PermissionDenied {
             permission: "speech_recognition".to_string(),
-        });
+        })
     }
-
-    Ok(())
 }
 
 /// Recognize speech from an audio file
@@ -463,8 +466,6 @@ impl LiveSession {
 fn speech_recognize_from_microphone(
     options: crate::models::RecognitionOptions,
 ) -> Result<crate::models::RecognitionResult> {
-    use crate::speech_live_ctrl::{self, LiveAction};
-
     /// Tick of the session decision loop.
     const TICK: Duration = Duration::from_millis(200);
 
