@@ -7,7 +7,11 @@ let package = Package(
     name: "tauri-plugin-device-ai-apis",
     platforms: [
         .macOS(.v10_13),
-        .iOS(.v13),
+        // iOS 15: the barcode detection path uses .codabar/.gs1DataBar*
+        // (VMLkBarcode symbologies introduced in iOS 15). A lower deployment
+        // target fails to compile DeviceAiPlugin.swift (caught by the
+        // ios-example CI job).
+        .iOS(.v15),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
