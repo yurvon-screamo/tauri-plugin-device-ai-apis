@@ -9,8 +9,10 @@ This repository has three GitHub Actions workflows:
    - `rust-desktop` — `cargo check` on Ubuntu, Windows, and macOS runners (the macOS runner
      is the only cheap CI place where the `cfg(macos)` objc/Speech code compiles; Windows
      covers `windows.rs`).
-   - `rust-mobile-check` — `cargo check --target aarch64-linux-android` and
-     `aarch64-apple-ios` (type-check only, no linking, no NDK needed).
+   - `rust-mobile-check` — `cargo check --target aarch64-linux-android`
+     (type-check only, no linking, no NDK needed). The iOS Rust target can't
+     be checked on Linux (Apple SDK headers) — it is covered by
+     `ios-example` on a macOS runner.
    - `android-example` — builds the example app's Android APK, compiling the Kotlin plugin
      (`DeviceAiPlugin.kt`). This is the only gate that catches Kotlin compile errors.
    - `ios-example` — builds the example app for the iOS simulator, compiling the Swift

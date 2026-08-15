@@ -57,7 +57,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [aarch64-linux-android, aarch64-apple-ios]
+        # aarch64-apple-ios is deliberately absent: even `cargo check` needs
+        # Apple SDK headers for dependency build scripts on Linux — the iOS
+        # Rust code is compiled by the `ios-example` job on a macOS runner
+        # instead.
+        target: [aarch64-linux-android]
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -66,9 +70,9 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           key: ${{ matrix.target }}
-      # `cargo check` does not invoke the linker, so the Android NDK / an Apple
-      # SDK are not needed — this is a type-check gate only. Both mobile cfg
-      # branches of the plugin (src/mobile.rs) compile here.
+      # `cargo check` does not invoke the linker, so the Android NDK is not
+      # needed — this is a type-check gate only. The mobile cfg branch of the
+      # plugin (src/mobile.rs) compiles here.
       - name: cargo check (no link)
         run: cargo check --workspace --all-targets --target ${{ matrix.target }}
 
