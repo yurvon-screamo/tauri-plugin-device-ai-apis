@@ -132,6 +132,10 @@ jobs:
           # `file:../../`, whose `prepare` script (husky) must resolve against
           # the root node_modules — same order as the Test workflow.
           npm ci --prefix ../..
+          # The example imports the plugin's JS package (file:../../), whose
+          # `main` points to dist-js/ — built by the root `npm run build`
+          # (same as the Test workflow's build-js-api step).
+          npm run build --prefix ../..
           npm ci
           # The example ships no gen/android project (it is generated locally);
           # generate it on the fly. Init is idempotent when gen already exists.
@@ -159,6 +163,10 @@ jobs:
           # `file:../../`, whose `prepare` script (husky) must resolve against
           # the root node_modules — same order as the Test workflow.
           npm ci --prefix ../..
+          # The example imports the plugin's JS package (file:../../), whose
+          # `main` points to dist-js/ — built by the root `npm run build`
+          # (same as the Test workflow's build-js-api step).
+          npm run build --prefix ../..
           npm ci
           # The example ships no gen/apple project (it is generated locally);
           # generate it on the fly. Init is idempotent when gen already exists.
