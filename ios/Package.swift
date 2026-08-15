@@ -1,5 +1,7 @@
-// swift-tools-version:5.3
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.5
+// 5.5 is the minimum that knows .iOS(.v15) — the barcode symbologies used by
+// DeviceAiPlugin.swift require the iOS 15 SDK.
+// The swift-tools-version declares the minimum required version of Swift build tools.
 
 import PackageDescription
 
