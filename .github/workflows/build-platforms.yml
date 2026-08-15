@@ -128,6 +128,10 @@ jobs:
       - name: Build example Android APK (debug, aarch64 only)
         working-directory: examples/tauri-app
         run: |
+          # Root install first: the example depends on the root package via
+          # `file:../../`, whose `prepare` script (husky) must resolve against
+          # the root node_modules — same order as the Test workflow.
+          npm ci --prefix ../..
           npm ci
           npx tauri android build --apk --debug --target aarch64
 
@@ -148,6 +152,10 @@ jobs:
       - name: Build example iOS (simulator, no signing)
         working-directory: examples/tauri-app
         run: |
+          # Root install first: the example depends on the root package via
+          # `file:../../`, whose `prepare` script (husky) must resolve against
+          # the root node_modules — same order as the Test workflow.
+          npm ci --prefix ../..
           npm ci
           npx tauri ios build --target aarch64-apple-ios-sim
         # Simulator builds need no signing identity or provisioning profile;
