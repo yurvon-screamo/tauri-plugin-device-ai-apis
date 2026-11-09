@@ -435,10 +435,16 @@ class DeviceAiPlugin(private val activity: Activity) : Plugin(activity) {
      */
     private fun createScriptRecognizer(className: String): TextRecognizer? {
         return try {
-            val clazz = Class.forName(className)
-            val builder = clazz.getMethod("Builder").invoke(null) as Any
-            val buildMethod = builder.javaClass.getMethod("build")
-            val options = buildMethod.invoke(builder)
+            val optionsClass = Class.forName(className)
+            // The builder is a nested CLASS (`…Options$Builder`), not a static
+            // method: resolve it explicitly, instantiate its public no-arg
+            // constructor, then call build(). A `getMethod("Builder")` lookup
+            // on the options class throws NoSuchMethodException every time —
+            // the reflection never reached ML Kit, so every script recognizer
+            // degraded to FEATURE_NOT_AVAILABLE on every device.
+            val builderClass = Class.forName("${className}\$Builder")
+            val builder = builderClass.getDeclaredConstructor().newInstance()
+            val options = builderClass.getMethod("build").invoke(builder)
             // `TextRecognition.getClient` is resolved reflectively as well:
             // its parameter type (`com.google.mlkit.vision.text.TextRecognizerOptions`)
             // is not on this module's compile classpath — only the Latin
